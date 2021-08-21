@@ -1,0 +1,40 @@
+@import url('https://fonts.cdnfonts.com/css/archia');
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+body {
+    font-family: Archia, "Helvetica Neue", sans-serif;
+}
+
+:root {
+    --background: #696969;
+    --accent-color: #f16677;
+    --active: #00d8a8;
+    --active-hover: #00c59b;
+    --primary-color: #09213d;
+    --white: #fff;
+    --light-grey: #889399;
+    --header-text-color: rgba(255, 255, 255, 0.6);
+    --sidebar-background: #fff;
+    --text-color: #323643;
+    --font-family: Archia;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+button {
+    padding: 16px 24px;
+    outline: none;
+    color: var(--white);
+    background: var(--active);
+    border: none;
+}
+
+button:hover {
+    background: var(--active-hover);
+    box-shadow: var(--box-shadow);
+}
