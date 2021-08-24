@@ -4,7 +4,7 @@ import ErrorComponent from "./components/shared/error.component";
 
 export const request = (method: Method, endpoint: string, params: any) => axios.request({
 	method,
-	url: `${environment.BASE_URL}/${environment.ENV}/${endpoint}/adsad`,
+	url: `${environment.BASE_URL}/${environment.ENV}/${endpoint}`,
 	params,
 	headers: {
 		'authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImV4cCI6IjIwMjEtMDgtMThUMDg6MTQ6NTYuNTE4MzgwIn0.eyJ1c2VyX2lkIjoiOGEwN2M5MTctZjM3Ni00YTIxLWEyMTYtOTk4OGRjZWEyM2FiIn0.I4UMWjM-e9t1QoOsfyZfwtdd0sg8vvC4qOAg-iLB9q4'
