@@ -3,7 +3,8 @@ import App from "./App";
 import {Route, Switch} from "react-router-dom";
 import React from "react";
 import FourOhFour from "./components/shared/FourOhFour.component";
-import TestComponent from "./components/shared/test.component";
+import WelcomeComponent from "./components/shared/welcome.component";
+import LoginComponent from './containers/auth/login.component';
 
 interface RouteProps {
 	path: string;
@@ -20,10 +21,16 @@ const Routes: Array<RouteProps> = [
 		component: App
 	},
 	{
-		path: '/test-routing',
+		path: '/login',
+		key: 'login',
+		exact: true,
+		component: LoginComponent
+	},
+	{
+		path: '/welcome',
 		key: 'test',
 		exact: true,
-		component: TestComponent
+		component: WelcomeComponent
 	}
 ]
 

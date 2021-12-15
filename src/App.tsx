@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
-import {request} from "./api-service";
+import {getRequest} from "./api-service";
 import {AxiosResponse} from "axios";
 // @ts-ignore
 import logo from './assets/images/eul-logo.svg';
@@ -21,8 +21,7 @@ const App = () => {
 	 */
 	const fetchAnalyticsData = async () => {
 		updateLoader(true);
-		return  await request(
-			'get',
+		return  await getRequest(
 			'fleet-analytics',
 			{
 				cities: '[all]',
@@ -50,7 +49,7 @@ const App = () => {
 			<h3>Root Component (working on default route '/')</h3>
 
 			<div>
-				<h3><Link to={'/test-routing'}>Test Route</Link></h3>
+				<h3><Link to={'/welcome'}>Test Route</Link></h3>
 			</div>
 
 			<div>

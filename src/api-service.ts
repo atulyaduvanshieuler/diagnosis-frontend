@@ -1,31 +1,58 @@
-import axios, {Method} from 'axios';
+import axios, {AxiosError} from 'axios';
 import environment from "./env/environment";
 import ErrorComponent from "./components/shared/error.component";
+// import SnackbarComponent from "./components/shared/snackbar.component";
 
-export const request = (method: Method, endpoint: string, params: any) => axios.request({
-	method,
-	url: `${environment.BASE_URL}/${environment.ENV}/${endpoint}`,
-	params,
-	headers: {
-		'authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImV4cCI6IjIwMjEtMDgtMThUMDg6MTQ6NTYuNTE4MzgwIn0.eyJ1c2VyX2lkIjoiOGEwN2M5MTctZjM3Ni00YTIxLWEyMTYtOTk4OGRjZWEyM2FiIn0.I4UMWjM-e9t1QoOsfyZfwtdd0sg8vvC4qOAg-iLB9q4'
+axios.interceptors.request.use((config) => {
+	let authToken = localStorage.getItem('auth');
+
+	if (authToken) {
+		config.headers = {
+			'Authorization': authToken
+		}
 	}
-}).catch(handleError);
 
-const handleError = (error: any) => {
+	if (config.url?.includes('login')) {
+		config = {
+			...config,
+			data: {
+				...config.data,
+				fcm_token: ''
+			}
+		}
+	}
+	return config;
+});
+
+export const getRequest = async (endpoint: string, params: any) => await axios
+	.get(`${environment.BASE_URL}/${environment.ENV}/api/${endpoint}`, {
+		params,
+	}).catch(handleError);
+
+export const postRequest = async (endpoint: string, params: any) => await axios
+	.post(
+		`${environment.BASE_URL}/${environment.ENV}/api/${endpoint}`,
+		{...params},
+		{
+			headers: {
+				'client': 'web',
+			}
+		}).catch(handleError);
+
+const handleError = (error: AxiosError) => {
 	if (!navigator.onLine) {
-		window.alert('Please check your Internet connection and try again!')
-		return;
+		// return SnackbarComponent({message: 'Please check your Internet connection and try again!'});
 	}
 
-	if (error.status === 500) {
-		ErrorComponent(error);
-	} else if ([401, 403, 404].includes(error.status)) {
-		ErrorComponent(error);
+	if (error.response?.status === 500) {
+		return ErrorComponent(error.response);
+	} else if ([401, 403, 404].includes(Number(error.response?.status))) {
+		localStorage.clear();
+		return ErrorComponent(error.response);
 	} else {
-		ErrorComponent(error);
+		return ErrorComponent(error.response || error);
 	}
 
 	throw(error);
 }
 
-export default request;

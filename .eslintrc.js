@@ -9,7 +9,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended',
 	],
 	rules: {
-		"quotes": "single",
-		"no-mixed-spaces-and-tabs": true,
+		"quotes": [1, 'single'],
+		"no-mixed-spaces-and-tabs": 1,
 	}
 };
