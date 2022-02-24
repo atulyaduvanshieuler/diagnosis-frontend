@@ -5,6 +5,7 @@ import React from "react";
 import FourOhFour from "./components/shared/FourOhFour.component";
 import WelcomeComponent from "./components/shared/welcome.component";
 import LoginComponent from './containers/auth/login.component';
+import DiagnosisComponent from "./containers/testing/run-tests.component";
 
 interface RouteProps {
 	path: string;
@@ -31,6 +32,12 @@ const Routes: Array<RouteProps> = [
 		key: 'test',
 		exact: true,
 		component: WelcomeComponent
+	},
+	{
+		path: '/runtest',
+		key: 'diagnosis',
+		exact: true,
+		component: DiagnosisComponent
 	}
 ]
 

@@ -25,7 +25,7 @@ axios.interceptors.request.use((config) => {
 });
 
 export const getRequest = async (endpoint: string, params: any) => await axios
-	.get(`${environment.BASE_URL}/${environment.ENV}/api/${endpoint}`, {
+	.get(`${environment.BASE_URL}/${endpoint}`, {
 		params,
 	}).catch(handleError);
 
