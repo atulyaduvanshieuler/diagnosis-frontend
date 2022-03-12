@@ -10,8 +10,7 @@ const TestBmsComponent = (props:any) =>{
     }else{ 
         if(resObj["test_status"] == true){
             return(
-                <div style={{color: "green"}}>
-                                    
+                <div style={{color: "green"}}>    
                     BMS Test Passed
                 </div>
             )

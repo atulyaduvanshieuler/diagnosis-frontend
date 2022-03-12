@@ -21,17 +21,17 @@ const CanDataCollectionComponent = (props:any) => {
     const [csvData, updateCsvData] = useState("")
     const [showCsv, updateShowCsv] = useState(false)
 
-    const startDataCollection = () =>{
+    const startDataLogging = () =>{
         updateShowCsv(false)
-        getRequest('collectcandata',{
+        getRequest('/api/v1/log/can-bus',{
         }).then((res:any)=>{
             alert('Colletion Started')
         })
 
     }
 
-    const stopDataCollection = () =>{
-        getRequest('sendcandata',{
+    const stopDataLogging = () =>{
+        getRequest('/api/v1/write_can_data_to_csv',{
         }).then((res:any)=>{
             updateCsvData(res.data)
             updateShowCsv(true)
@@ -53,7 +53,7 @@ const CanDataCollectionComponent = (props:any) => {
                         <Button
                             className='button'
                             variant="contained"
-                            onClick={startDataCollection}
+                            onClick={startDataLogging}
                             >
                             Start        
                         </Button>
@@ -62,7 +62,7 @@ const CanDataCollectionComponent = (props:any) => {
                         <Button
                             className='button'
                             variant="contained"
-                            onClick={stopDataCollection}
+                            onClick={stopDataLogging}
                             >
                             Stop
                         </Button>

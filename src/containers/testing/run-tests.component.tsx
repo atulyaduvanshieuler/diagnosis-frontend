@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{ useState} from "react";
 import {Button} from "@mui/material";
 import Grid from "@material-ui/core/Grid";
 import Box from '@mui/material/Box';
@@ -9,6 +9,19 @@ import TestStarkComponent from "./test-stark.component";
 import { getRequest } from "../../api-service";
 import CanDataCollectionComponent from "./can-data-collection.component";
 
+const setAllTrue = {
+    starkButton:true,
+    testAllButton:true,
+    bmsButton:true,
+    controllerButton:true
+}
+
+const setAllFalse = {
+    starkButton:false,
+    testAllButton:false,
+    bmsButton:false,
+    controllerButton:false
+}
 
 const DiagnosisComponent=()=>{
 
@@ -33,40 +46,7 @@ const DiagnosisComponent=()=>{
 
     const [canCollectionButtons, updateCanCollectionButtons] = useState(false)
 
-    // const [bmsResponse, updateBmsResponse] = useState({
-    //                                                     test_status:"",
-    //                                                     test_errors:[]
-    //                                                     })
-
-    // const [starkResponse, updateStarkResponse] = useState({
-    //     "test_status":"",
-    //     "test_errors":[]
-    //     })
-
-    // const [controllerResponse, updateControllerResponse] = useState({
-    //     "test_status":"",
-    //     "test_errors":[]
-    //     })
-
-    // const [testAllResponse, updateTestAllResponse] = useState({
-    //     "test_status":"",
-    //     "test_errors":[]
-    //     })
-
-
-    const setAllTrue = {
-                        starkButton:true,
-                        testAllButton:true,
-                        bmsButton:true,
-                        controllerButton:true
-                    }
     
-    const setAllFalse = {
-                        starkButton:false,
-                        testAllButton:false,
-                        bmsButton:false,
-                        controllerButton:false
-                    }
 
     const [handleButtons, updateHandleButtons]=useState(setAllTrue)
 
@@ -74,11 +54,11 @@ const DiagnosisComponent=()=>{
         if (handleButtons.testAllButton==true){
             updateHandleButtons(setAllFalse)
             
-            getRequest('testall',{
+            getRequest('api/v1/test/all',{
             }).then((res:any)=>{
                 
                 updateResponse({...response,testall:{
-                                                    test_status : res.data.test_Status,
+                                                    test_status : res.data.test_status,
                                                     test_errors : res.data.test_errors
                                                     }
                                             })
@@ -94,17 +74,15 @@ const DiagnosisComponent=()=>{
         if (handleButtons.starkButton==true){
             updateHandleButtons(setAllFalse)
             
-            getRequest('teststark',{
+            getRequest('api/v1/test/stark',{
             }).then((res:any)=>{
-                
                 updateResponse({...response, stark:{
-                                                    test_status : res.data.test_Status,
+                                                    test_status : res.data.test_status,
                                                     test_errors : res.data.test_errors
                                                 }
                                })
-
-                updateHandleButtons(setAllTrue)
                 
+                updateHandleButtons(setAllTrue)
             })
             updateHandleButtons(setAllTrue)
         }
@@ -114,25 +92,16 @@ const DiagnosisComponent=()=>{
         if (handleButtons.bmsButton==true){
             updateHandleButtons(setAllFalse)
             
-            getRequest('testbms',{
+            getRequest('api/v1/test/bms',{
             }).then((res:any)=>{
-                
+                console.log(res)
                 updateResponse({...response, bms:{
-                                                  test_status : res.data.test_Status,
+                                                  test_status : res.data.test_status,
                                                   test_errors : res.data.test_errors
                                                 }
                                 })
 
                 updateHandleButtons(setAllTrue)
-
-                // updateBmsResponse({...bmsResponse, 
-                //                     test_status : res.data.test_status,
-                //                     test_errors : res.data.test_errors})
-
-                // //console.log(res.data.test_status, res.data.test_errors)
-                // //console.log(bmsResponse)
-                // updateHandleButtons(setAllTrue)
-                
             })
             updateHandleButtons(setAllTrue)
         }
@@ -142,17 +111,14 @@ const DiagnosisComponent=()=>{
         if (handleButtons.controllerButton==true){
             updateHandleButtons(setAllFalse)
             
-            getRequest('testcontroller',{
+            getRequest('api/v1/test/controller',{
             }).then((res:any)=>{
-                
                 updateResponse({...response, controller:{
-                                                        test_status : res.data.test_Status,
+                                                        test_status : res.data.test_status,
                                                         test_errors : res.data.test_errors
                                                         }
                                 })
-
                 updateHandleButtons(setAllTrue)
-                
             })
             updateHandleButtons(setAllTrue)
         }
@@ -173,6 +139,7 @@ const DiagnosisComponent=()=>{
                 <Grid item  md={3}>
                     <TestStarkComponent resObj = {response.stark} />
                 </Grid>
+                
             </Grid>
             <Grid key={2} container direction={"row"} spacing={3}>
                 <Grid item  md={3}>
