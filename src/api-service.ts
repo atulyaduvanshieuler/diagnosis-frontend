@@ -1,43 +1,48 @@
-import axios, {AxiosError} from 'axios';
+import axios, { AxiosError } from "axios";
 import environment from "./env/environment";
 import ErrorComponent from "./components/shared/error.component";
 // import SnackbarComponent from "./components/shared/snackbar.component";
 
 axios.interceptors.request.use((config) => {
-	let authToken = localStorage.getItem('auth');
+	const authToken = localStorage.getItem("auth");
 
 	if (authToken) {
 		config.headers = {
-			'Authorization': authToken
-		}
+			Authorization: authToken,
+		};
 	}
 
-	if (config.url?.includes('login')) {
+	if (config.url?.includes("login")) {
 		config = {
 			...config,
 			data: {
 				...config.data,
-				fcm_token: ''
-			}
-		}
+				fcm_token: "",
+			},
+		};
 	}
 	return config;
 });
 
-export const getRequest = async (endpoint: string, params: any) => await axios
-	.get(`${environment.BASE_URL}/${endpoint}`, {
-		params,
-	}).catch(handleError);
+export const getRequest = async (endpoint: string, params: any) =>
+	await axios
+		.get(`${environment.BASE_URL}/${endpoint}`, {
+			params,
+		})
+		.catch(handleError);
 
-export const postRequest = async (endpoint: string, params: any) => await axios
-	.post(
-		`${environment.BASE_URL}/${environment.ENV}/api/${endpoint}`,
-		{...params},
-		{
-			headers: {
-				'client': 'web',
+export const postRequest = async (endpoint: string, params: any) =>
+	await axios
+		.post(
+			`${environment.BASE_URL}/${endpoint}`,
+			{ ...params },
+			{
+				headers: {
+					client: "web",
+				},
 			}
-		}).catch(handleError);
+		)
+		.catch(handleError);
 
 const handleError = (error: AxiosError) => {
 	if (!navigator.onLine) {
@@ -53,6 +58,5 @@ const handleError = (error: AxiosError) => {
 		return ErrorComponent(error.response || error);
 	}
 
-	throw(error);
-}
-
+	throw error;
+};

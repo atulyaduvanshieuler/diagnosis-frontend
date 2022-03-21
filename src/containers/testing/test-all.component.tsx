@@ -1,67 +1,52 @@
 import React from "react";
+import { ResponseType } from "./run-tests.component";
 
-const TestAllComponent = (props:any) =>{
+const TestAllComponent = (resObj: ResponseType): React.ReactElement => {
+  const { test_status, test_errors } = resObj;
 
-    if(props.resObj["test_status"]==""){
-        return(<></>)
-    }else {
-        if(props.resObj["test_status"]=="All Tests Passed"){
-            return(
-                <div style={{color: "green"}}>
-                    All Tests Passed
-                </div>
-            )
-        }
-        else if(props.resObj=="Stark Testing Failed"){
-            return(
-                <div style={{color: "red"}}>
-                    Stark test Failed
-                    {props.resObj["test_errors"].map((x:any, key:any)=>{
-                        return(
-                            <li key={key}>{x}</li>
-                        )
-                    }
-                    )}
-                </div>
-            )
-        }else if(props.resObj=="Controller Testing Failed"){
-            return(
-                <div style={{color: "red"}}>
-                    Controller Testing Failed
-                    {props.resObj["test_errors"].map((x:any, key:any)=>{
-                        return(
-                            <li key={key}>{x}</li>
-                        )
-                    }
-                    )}
-                </div>
-            )
-        }else if(props.resObj=="BMS Testing Failed"){
-            return(
-                <div style={{color: "red"}}>
-                    BMS Testing Failed
-                    {props.resObj["test_errors"].map((x:any, key:any)=>{
-                        return(
-                            <li key={key}>{x}</li>
-                        )
-                    }
-                    )}
-                </div>
-            )
-        }else{
-            return(
-                <div style={{color: "red"}}>
-                    Received something else
-                    {props.resObj["test_errors"].map((x:any, key:any)=>{
-                        return(
-                            <li key={key}>{x}</li>
-                        )
-                    }
-                    )}
-                </div>
-            )
-        }
-}
-}
+  if (test_status == "") {
+    return <></>;
+  } else {
+    if (test_status == "All Tests Passed") {
+      return <div style={{ color: "green" }}>All Tests Passed</div>;
+    } else if (test_status == "Stark Testing Failed") {
+      return (
+        <div style={{ color: "red" }}>
+          Stark test Failed
+          {test_errors?.map((x: string, key: number) => {
+            return <li key={key}>{x}</li>;
+          })}
+        </div>
+      );
+    } else if (test_status == "Controller Testing Failed") {
+      return (
+        <div style={{ color: "red" }}>
+          Controller Testing Failed
+          {test_errors?.map((x: string, key: number) => {
+            return <li key={key}>{x}</li>;
+          })}
+        </div>
+      );
+    } else if (test_status == "BMS Testing Failed") {
+      return (
+        <div style={{ color: "red" }}>
+          BMS Testing Failed
+          {test_errors?.map((x: string, key: number) => {
+            return <li key={key}>{x}</li>;
+          })}
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ color: "red" }}>
+          Received something else
+          {test_errors?.map((x: string, key: number) => {
+            return <li key={key}>{x}</li>;
+          })}
+        </div>
+      );
+    }
+  }
+};
 
-export default TestAllComponent; 
+export default TestAllComponent;

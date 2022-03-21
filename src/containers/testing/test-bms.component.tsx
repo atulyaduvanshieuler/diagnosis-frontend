@@ -1,33 +1,23 @@
 import React from "react";
+import { ResponseType } from "./run-tests.component";
 
-const TestBmsComponent = (props:any) =>{
-    const {resObj} = props;
+const TestBmsComponent = (resObj: ResponseType): React.ReactElement => {
+  const { test_status, test_errors } = resObj;
 
-    if(resObj["test_status"]==""){
-        return(
-            <></>
-        )
-    }else{ 
-        if(resObj["test_status"] == true){
-            return(
-                <div style={{color: "green"}}>    
-                    BMS Test Passed
-                </div>
-            )
-        }else{
-            return(
-            <div>
-                Test Failed
-                {resObj["test_errors"].map((x:any, key:any)=>{
-                    return(
-                        <li key={key}>{x}</li>
-                    )
-                }
-                )}
-            </div>
-            )
-        }
-    }
-}
+  if (test_status === "") {
+    return <></>;
+  } else if (test_status === true) {
+    return <div style={{ color: "green" }}>BMS Test Passed</div>;
+  } else {
+    return (
+      <div style={{ color: "red" }}>
+        <span>BMS Test Failed</span>
+        {test_errors?.map((x: string, key: number) => (
+          <li key={key}>{x}</li>
+        ))}
+      </div>
+    );
+  }
+};
 
 export default TestBmsComponent;

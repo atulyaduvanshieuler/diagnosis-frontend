@@ -1,6 +1,6 @@
 export const AppPath = {
-	LOGIN: '/login',
-	WELCOME: '/welcome'
-}
+	LOGIN: "/login",
+	WELCOME: "/welcome",
+};
 
 export default AppPath;
